@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32421.90
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamsSilentAuthMVC", "TeamsSilentAuthMVC\TeamsSilentAuthMVC.csproj", "{CCDB6F7D-D515-4F9E-905A-882CF65E3B1D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CCDB6F7D-D515-4F9E-905A-882CF65E3B1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCDB6F7D-D515-4F9E-905A-882CF65E3B1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCDB6F7D-D515-4F9E-905A-882CF65E3B1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCDB6F7D-D515-4F9E-905A-882CF65E3B1D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3D1DD7DE-227A-44C5-8AC2-4D4C309EDFB3}
+	EndGlobalSection
+EndGlobal
