@@ -1,0 +1,82 @@
+﻿<head>
+    <title>Silent Authentication Sample Login</title>
+</head>
+<body>
+    <script src="../Scripts/jquery-3.5.1.min.js"></script>
+    <script src="../Scripts/msteams-sdk-1.6.0.js"></script>
+    <script src="../Scripts/ms-adal-1.0.17.js"></script>
+
+    <script type="text/javascript">
+
+            microsoftTeams.initialize();
+
+            $.ajax({
+                url: "/Auth/Log",
+                data: {
+                    sourceAction: "msTeamsSilentStart: initalizing microsoftTeams SDK."
+                },
+                type: "POST",
+                cache: false,
+                success: function (data) {
+                    console.log("Logging successful.");
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("Logging failed.");
+                }
+            });
+
+            // Get the tab context, and use the information to navigate to Azure AD login page
+            microsoftTeams.getContext(function (context) {
+
+                // ADAL.js configuration
+                let config = {
+                    // Use the tenant id of the current organization. For guest users, we want an access token for
+                    // the tenant we are currently in, not the home tenant of the guest.
+                    tenant: context.tid,
+                    clientId: "@ViewBag.ClientId",
+                    redirectUri: window.location.origin + "/auth/msteamsSilentEnd",       // This should be in the list of redirect uris for the AAD app
+                    cacheLocation: "localStorage",
+                    navigateToLoginRequestUrl: false,
+
+                    // Setup extra query parameters for ADAL
+                    // - openid and profile scope adds profile information to the id_token
+                    // - login_hint provides the expected user name
+                    extraQueryParameter: "scope=openid+profile&login_hint=" + encodeURIComponent(context.loginHint),
+                };
+
+                $.ajax({
+                    url: "/Auth/Log",
+                    data: {
+                        sourceAction: "msTeamsSilentStart: configuration created.\r\ntenant: " + context.tid + "\r\nclientId: @ViewBag.ClientId\r\nredirectUri: " + window.location.origin + "/auth/msteamsSilentEnd\r\nextraQueryParameter: scope=openid+profile&login_hint=" + encodeURIComponent(context.loginHint)
+                    },
+                    type: "POST",
+                    cache: false,
+                    success: function (data) {
+                        console.log("Logging successful.");
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log("Logging failed.");
+                    }
+                });
+
+                // Navigate to the AzureAD login page
+                let authContext = new AuthenticationContext(config);
+                authContext.login();
+
+                $.ajax({
+                    url: "/Auth/Log",
+                    data: {
+                        sourceAction: "msTeamsSilentStart: Attempt to invoke login() method of authContext with config."
+                    },
+                    type: "POST",
+                    cache: false,
+                    success: function (data) {
+                        console.log("Logging successful.");
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log("Logging failed.");
+                    }
+                });
+            });
+    </script>
+</body>

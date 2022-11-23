@@ -1,0 +1,99 @@
+﻿<html>
+<head>
+    <title>Silent Authentication Sample Login</title>
+</head>
+<body>
+    <script src="../Scripts/jquery-3.5.1.min.js"></script>
+    <script src="../Scripts/msteams-sdk-1.6.0.js"></script>
+    <script src="../Scripts/ms-adal-1.0.17.js"></script>
+
+    <script type="text/javascript">
+
+			microsoftTeams.initialize();
+
+            $.ajax({
+                url: "/Auth/Log",
+                data: {
+                    sourceAction: "msTeamsSilentEnd: initalizing microsoftTeams SDK."
+                },
+                type: "POST",
+                cache: false,
+                success: function (data) {
+                    console.log("Logging successful.");
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("Logging failed.");
+                }
+            });
+
+			// ADAL.js configuration
+			let config = {
+                clientId: "@ViewBag.ClientId",
+				redirectUri: window.location.origin + "/auth/msteamsSilentEnd",       // This should be in the list of redirect uris for the AAD app
+				cacheLocation: "localStorage",
+				navigateToLoginRequestUrl: false,
+			};
+
+            $.ajax({
+                url: "/Auth/Log",
+                data: {
+                    sourceAction: "msTeamsSilentEnd: configuration created.\r\nclientId: @ViewBag.ClientId\r\nredirectUri: " + window.location.origin + "/auth/msteamsSilentEnd\r\nnavigateToLoginRequestUrl: false"
+                },
+                type: "POST",
+                cache: false,
+                success: function (data) {
+                    console.log("Logging successful.");
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("Logging failed.");
+                }
+            });
+
+			let authContext = new AuthenticationContext(config);
+
+			if (authContext.isCallback(window.location.hash)) {
+
+
+				authContext.handleWindowCallback(window.location.hash);
+				// Only call notifySuccess or notifyFailure if this page is in the authentication popup (not iframed)
+				if (window.parent === window) {
+                    if (authContext.getCachedUser()) {
+                        $.ajax({
+                            url: "/Auth/Log",
+                            data: {
+                                sourceAction: "msTeamsSilentEnd: microsoftTeams.authentication success notification."
+                            },
+                            type: "POST",
+                            cache: false,
+                            success: function (data) {
+                                console.log("Logging successful.");
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                console.log("Logging failed.");
+                            }
+                        });
+
+                        microsoftTeams.authentication.notifySuccess();
+                    } else {
+                        $.ajax({
+                            url: "/Auth/Log",
+                            data: {
+                                sourceAction: "msTeamsSilentEnd: microsoftTeams.authentication failure notification."
+                            },
+                            type: "POST",
+                            cache: false,
+                            success: function (data) {
+                                console.log("Logging successful.");
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                console.log("Logging failed.");
+                            }
+                        });
+
+						microsoftTeams.authentication.notifyFailure(authContext.getLoginError());
+					}
+				}
+			}
+    </script>
+</body>
+</html>
