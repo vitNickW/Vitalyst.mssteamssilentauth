@@ -1,9 +1,15 @@
 ﻿using System;
 using System.Configuration;
+using System.Diagnostics;
 using System.Security.Claims;
+using System.Text;
+using System.Web;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Owin.Host.SystemWeb;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
+using Microsoft.Owin.Security.Jwt;
 using Owin;
 
 namespace TeamsSilentAuthMVC
@@ -20,7 +26,14 @@ namespace TeamsSilentAuthMVC
         {
             app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
 
-            app.UseCookieAuthentication(new CookieAuthenticationOptions());
+            app.UseCookieAuthentication(new CookieAuthenticationOptions()
+            {
+                CookieSameSite = (Microsoft.Owin.SameSiteMode?)SameSiteMode.None,
+                CookieHttpOnly = true,
+                CookieSecure = CookieSecureOption.Always,
+                CookieName = "AspNetAuthorize",
+                Provider = new CookieAuthenticationProvider()
+            });
 
             app.UseOpenIdConnectAuthentication(
                 new OpenIdConnectAuthenticationOptions
@@ -28,7 +41,13 @@ namespace TeamsSilentAuthMVC
                     ClientId = clientId,
                     Authority = authority,
                     PostLogoutRedirectUri = postLogoutRedirectUri,
-
+                    SaveTokens = true,
+ 
+                    TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = false,
+                        SaveSigninToken = true,
+                    },
                     Notifications = new OpenIdConnectAuthenticationNotifications()
                     {
                         SecurityTokenValidated = (context) =>
@@ -39,7 +58,6 @@ namespace TeamsSilentAuthMVC
                         }
                     }
                 });
-                 
         }
 
         private static string EnsureTrailingSlash(string value)

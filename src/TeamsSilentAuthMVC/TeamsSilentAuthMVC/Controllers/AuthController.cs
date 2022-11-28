@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 using System.Configuration;
-using System.Threading;
-using System.Security.Claims;
-using RestSharp;
-using Newtonsoft.Json;
 using System.Diagnostics;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security;
+using System.Web.Mvc;
+using Vitalyst.AdaptiveLearning.MVC.Helpers;
 
 namespace Vitalyst.AdaptiveLearning.MVC.Controllers
 {
@@ -28,13 +19,12 @@ namespace Vitalyst.AdaptiveLearning.MVC.Controllers
         [HttpGet]
         public ActionResult SilentPost(string idToken)
         {
-            //JwtHelper jwt = new JwtHelper();
+            JwtHelper jwt = new JwtHelper();
             try
             {
-                //string accessToken = jwt.ProcessJwt(idToken, Request, Response, Session, HttpContext);
+                string accessToken = jwt.ProcessJwt(idToken, Request, Response, Session, HttpContext);
 
-                //return Json(new { accessToken = accessToken }, JsonRequestBehavior.AllowGet);
-                return null;
+                return Json(new { accessToken = accessToken }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
