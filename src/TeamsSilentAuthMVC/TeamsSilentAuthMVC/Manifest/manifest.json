@@ -1,0 +1,50 @@
+{
+    "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.11/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.11",
+    "version": "1.0.0",
+    "id": "f0e772db-0a31-4c33-925d-9877f7809303",
+    "packageName": "teamsstatictab",
+    "developer": {
+        "name": "Test App",
+        "websiteUrl": "https://www.example.com",
+        "privacyUrl": "https://www.example.com/privacy-policy/",
+        "termsOfUseUrl": "https://www.example.com/general-terms-and-conditions/"
+    },
+    "icons": {
+        "color": "color.png",
+        "outline": "outline.png"
+    },
+    "name": {
+        "short": "AuthTest (Teams)",
+        "full": "LocalHost testing for Authentication"
+    },
+    "description": {
+        "short": "Testing Authentication in Teams",
+        "full": ""
+    },
+    "accentColor": "#FFFFFF",
+    "staticTabs": [
+        {
+            "entityId": "Test",
+            "name": "Home",
+            "contentUrl": "https://localhost:44370",
+            "websiteUrl": "https://localhost:44370",
+            "scopes": [
+                "personal"
+            ]
+        },
+        {
+            "entityId": "about",
+            "scopes": [
+                "personal"
+            ]
+        }
+    ],
+    "permissions": [
+        "identity",
+        "messageTeamMembers"
+    ],
+    "validDomains": [
+        ""
+    ]
+}

@@ -30,6 +30,7 @@ namespace TeamsSilentAuthMVC.Controllers
                 OpenIdConnectAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);
         }
 
+        [AllowAnonymous]
         public ActionResult SignOutCallback()
         {
             if (Request.IsAuthenticated)
