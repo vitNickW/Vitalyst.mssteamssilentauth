@@ -28,4 +28,9 @@ This repository requires an Azure App Registration configured for the app in que
 
 ## Side-load App Package to Teams
 
-7. 
+7. A package .zip file is located in the Manifest folder of the Vitalyst.msstemassilentauth\src\TeamsSilentAuthMVC\TeamsSilentAuthMVC project.
+8. Double-check manifest.json in the Manifest folder to ensure all valid values are appropriately set.
+9. If you need to edit the manifest.json file, be sure to re-add it to the .zip file before side-loading to Teams.
+10. In Teams, go to Apps | Manage your apps | Upload an App | Upload a custom app | browse to and select the manifest.zip package file.
+11. Accept the package info dialog and the app should now be available in Teams as "AuthTest (Teams)."
+12. Attempt to view the App and log in via the Home tab.
